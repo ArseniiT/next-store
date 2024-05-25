@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import CartDropdown from './cart-dropdown/CartDropdown'
 import ProductItem from './ProductItem'
+import { useGetProductsQuery } from '../../../store/product/product.api'
 
 const data: any = [
 	{
@@ -27,6 +28,8 @@ const data: any = [
 ]
 
 const Home: FC = () => {
+
+	const { data, isLoading, error } = useGetProductsQuery(6)
 	return (
 		<div>
 			<div className='flex justify-between items-center mb-10'>
@@ -36,11 +39,18 @@ const Home: FC = () => {
 				<CartDropdown />
 			</div>
 
-			<div className='flex flex-wrap justify-between'>
-				{data?.map((product: any) => (
-					<ProductItem key={product.id} product={product} />
-				))}
-			</div>
+			{ isLoading ? (
+
+				<p>Loading...</p>
+			) : error ? (
+				<div className="text-red">{error}</div>
+			) : (
+				<div className='flex flex-wrap justify-between'>
+					{data?.map((product: any) => (
+						<ProductItem key={product.id} product={product} />
+					))}
+				</div>
+			)}
 		</div>
 	)
 }

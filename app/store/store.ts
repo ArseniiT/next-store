@@ -1,6 +1,9 @@
-import { createStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import { productApi } from "./product/product.api";
 
-export const store = createStore({
-    // products: [],
-    // cart: [],
-})
+export const store = configureStore({
+    reducer: {[productApi.reducerPath]: productApi.reducer},
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(productApi.middleware),
+});
+
+export type RootState = ReturnType<typeof store.getState>;
