@@ -46,7 +46,7 @@ const Home: FC = () => {
 				<div className="text-red">{error}</div>
 			) : (
 				<div className='flex flex-wrap justify-between'>
-					{data?.map((product: any) => (
+					{data?.map((product) => (
 						<ProductItem key={product.id} product={product} />
 					))}
 				</div>
